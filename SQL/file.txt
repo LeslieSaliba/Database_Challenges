@@ -1,4 +1,4 @@
-# Challenge 1
+# Challenge 1: MySQL Setup and Basic Commands
 
     // creating new database 
     CREATE DATABASE schoolDB;
@@ -10,7 +10,7 @@
     SHOW DATABASES;
 
 
-## Challenge 2
+## Challenge 2: Using and Displaying Tables
 
     // creating the table with the needed columns (in one step!) 
     CREATE TABLE teachers (
@@ -36,7 +36,95 @@
 
     // showing the table structure (with no data in it) 
     DESCRIBE teachers;
-    
 
-### Challenge 3
 
+### Challenge 3: Basic SELECT Statements
+
+    // retriving all data 
+    SELECT * FROM teachers;
+
+    // retriving some columns (seperated by commas) 
+    SELECT first_name, subject FROM teachers;
+
+
+#### Challenge 4: Exploring JOIN Operations  
+
+    // creating new table 
+    CREATE TABLE students(
+    id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    teacher_id INT
+    );
+
+    // inserting data in it 
+    INSERT INTO students(id, first_name, last_name, teacher_id)
+    VALUES (1, 'Alice', 'Brown', 1),
+       (2, 'Bob', 'Johnson', 2);
+
+    // associating each student's name with its teacher's name 
+    SELECT teachers.first_name, students.first_name
+    FROM teachers
+    INNER JOIN students
+    ON teachers.id = students.teacher_id;
+
+    // showing all students with their teacher's name 
+    SELECT students.first_name, students.last_name, students.id, teachers.first_name
+    FROM students
+    LEFT JOIN teachers
+    ON teachers.id = students.teacher_id;
+
+    // showing all teachers with their student's name 
+    SELECT teachers.first_name, teachers.last_name, teachers.id, students.first_name
+    FROM teachers
+    RIGHT JOIN students
+    ON teachers.id = students.teacher_id;
+
+    // simulating a full join between the two tables 
+    SELECT *
+    FROM teachers
+    INNER JOIN students
+    ON teachers.id = students.teacher_id;
+
+
+##### Challenge 5: Creating Tables and Designing Schema
+
+    // creating authors and publishers tables first 
+    CREATE TABLE authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    author_name TEXT,
+    birthdate DATE
+    );
+
+    CREATE TABLE publishers (
+        publisher_id INT AUTO_INCREMENT PRIMARY KEY,
+        publisher_name TEXT,
+        establishment_date DATE
+    );
+
+    // creating table for books afterwards with as foreign keys the author_id and publisher_id 
+    CREATE TABLE books (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    publication_date DATE,
+    author_id INT,
+    pages INT,
+    publisher_id INT,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id),
+    FOREIGN KEY (publisher_id) REFERENCES publishers(publisher_id)
+    );
+
+    // I wanted to insert some data in the tables to practice but the terminal stopped working... 
+    INSERT INTO books(title, publication_date, pages)
+    VALUES ('Les Contemplations', 1856-01-01, 496)
+    ('Candide ou l'Optimisme', 1759-01-01, 124)
+    ('Le Tour du monde en quatre-vingts jours', 1872-01-01, 256)
+
+    INSERT INTO authors(author_name, birthdate)
+    VALUES ('Victor Hugo', 1802-02-26)
+    ('Voltaire', 1694-11-21)
+    ('Jules Verne', 1828-02-08)
+
+    INSERT INTO publishers(publisher_name, establishment_date)
+    VALUES ('Flammarion', 1875-01-01)
+    ('Le Livre de Poche', 1953-02-09)

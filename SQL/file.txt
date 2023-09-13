@@ -1,0 +1,42 @@
+# Challenge 1
+
+    // creating new database 
+    CREATE DATABASE schoolDB;
+
+    // switching to the wanted database 
+    USE schoolDB;
+
+    // see all databases 
+    SHOW DATABASES;
+
+
+## Challenge 2
+
+    // creating the table with the needed columns (in one step!) 
+    CREATE TABLE teachers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    subject VARCHAR(255)
+);
+
+    // checking if the table was created correctly 
+    SHOW COLUMNS FROM teachers;
+
+    // inserting the requested data 
+    INSERT INTO teachers(id, first_name, last_name, subject)
+    VALUES (1, 'John', 'Doe', 'Math'),
+       (2, 'Jane', 'Smith', 'Science');
+
+    // checking if the data was inserted correctly
+    SELECT * FROM teachers;
+
+    // checking all tables in the same database 
+    SHOW TABLES;
+
+    // showing the table structure (with no data in it) 
+    DESCRIBE teachers;
+    
+
+### Challenge 3
+

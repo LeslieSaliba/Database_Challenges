@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/api", (req, res) => {
-  console.log(`Listening at http://localhost:${port}`);
   res.send("This is working!");
 });
 

@@ -70,7 +70,9 @@ const userSchema = new mongoose.Schema({
 // Create a User model from the schema
 const User = mongoose.model('User', userSchema);
 
-// Create a new user
+
+// CRUD = create, read, update, delete 
+// 1. Create a new user
 app.post("/api/users", async (req, res) => {
   try {
     const { username, email } = req.body;
@@ -87,7 +89,7 @@ app.post("/api/users", async (req, res) => {
 });
 
 
-// Get all users
+// 2. Get all users --> fetch all data: challenge 5.1. ? 
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
@@ -98,7 +100,22 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// Update a user by ID
+// Get a user by ID --> fetch specific data: challenge 5.2. ?
+app.get("/api/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+});
+
+// 3. Update a user by ID
 app.put("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -114,7 +131,7 @@ app.put("/api/users/:id", async (req, res) => {
   }
 });
 
-// Delete a user by ID
+// 4. Delete a user by ID
 app.delete("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -126,5 +143,25 @@ app.delete("/api/users/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting user:", error);
     res.status(500).json({ error: "Failed to delete user" });
+  }
+});
+
+// Add some sample user data for retrieval (new route)
+
+app.post("/api/seed", async (req, res) => {
+  try {
+    const sampleUsers = [
+      { username: "Leslie", email: "leslie@example.com" },
+      { username: "Glenn", email: "glenn@example.com" },
+      { username: "Gabriel", email: "gabriel@example.com" }
+    ];
+
+    // Insert sample users into the database
+    await User.insertMany(sampleUsers);
+
+    res.status(201).json({ message: "Sample user data seeded successfully" });
+  } catch (error) {
+    console.error("Error seeding data:", error);
+    res.status(500).json({ error: "Failed to seed sample user data" });
   }
 });

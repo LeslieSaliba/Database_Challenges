@@ -89,7 +89,7 @@ app.post("/api/users", async (req, res) => {
 });
 
 
-// 2. Get all users --> fetch all data: challenge 5.1. ? 
+// 2. Get all users --> tested on Postman and worked on browser
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
@@ -100,7 +100,7 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// Get a user by ID --> fetch specific data: challenge 5.2. ?
+// Get a user by ID --> tested on Postman and worked on browser
 app.get("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -115,7 +115,7 @@ app.get("/api/users/:id", async (req, res) => {
   }
 });
 
-// 3. Update a user by ID
+// 3. Update a user by ID --> tested on Postman and worked on browser
 app.put("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -131,7 +131,7 @@ app.put("/api/users/:id", async (req, res) => {
   }
 });
 
-// 4. Delete a user by ID
+// 4. Delete a user by ID --> tested on Postman and worked on browser
 app.delete("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
